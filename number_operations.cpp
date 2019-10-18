@@ -14,7 +14,8 @@ above each function as to what it is supposed to do
 int main() {
 	// array of numbers to have operations performed on it
 	int nums[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-	int nums_size = sizeof(nums); 
+	int nums_size = sizeof(nums)/sizeof(*nums); //og: int nums_size = sizeof(nums);
+	//^^ changed so that nums_size == number of elements in nums array
 
 	// getting array of odds and printing them out
 	int * o = odds(nums, nums_size);
@@ -42,10 +43,10 @@ int main() {
 
 
 // takes an array and a size as input and returns the sum of the elements
-int sum(int* nums, int size) {
+int sum(int* nums, int size) {  
 	int sum = 0;
 	for (int i = 0; i < size; i++) {
-		sum += *(nums + i);
+	  sum += *(nums + i);
 	}
 	return sum;
 }
@@ -62,14 +63,18 @@ int sum(int* nums, int size) {
  odds[5] = {1, 7, 0, 0, 0}; <- array returned
 
  */
-int* odds(int* nums, int size) {
-	static int odds[10]; 
+int* odds(int* nums, int size) {  //printed output with run; odd numbers aren't all odd
+  static int odds[10];
 	int j = 0;
 	for (int i = 0; i < size; i++){
-		if ( *(nums + i) / 2 ) { 
-			odds[j] = *(nums + j); 
-			j++;
+	  if ( *(nums + i) %2 !=0) {  //og: if ( *(nums + i) / 2 ) {
+	    //^^ changed so that it checks if there is a remainder after dividing by 2
+	    odds[j] = *(nums + i); //og: odds[j] = *(nums + j);
+	    //^^ changed + j to + i (incorrect reference)
+		   j++;
 		}
+	  else
+	    odds[j] = 0;//added for even numbers
 	}
 	return odds;
 
@@ -79,11 +84,11 @@ int* odds(int* nums, int size) {
   Takes an array of numbers and it's size and returns the average 
   of the numbers inside the array
 */
-double getAverage(int* nums, int size) {
-  int sum;       
+double getAverage(int* nums, int size) { //used run to output average, average > sum :/
+  int sum = 0;   //changed sum back to 0    
   double avg;          
 
-   for (int i = 0; i <= size; i++) { 
+  for (int i = 0; i < size; i++) { //changed i < size (doesn't get f-bombed up)
       sum += *(nums + i);
    }
    avg = double(sum) / size;
@@ -96,7 +101,9 @@ This function takes an array, a new value to be assigned, and the position of
 the new value to be overwritten
 */
 void changeValue(int* nums, int new_value, int index) {
-	nums = &new_value;
+  //og: nums = &new_value; >>> make 6th val 2343?
+  //&(nums[index]) = new_value;
+  nums[index-1]= new_value;
 }
 
 

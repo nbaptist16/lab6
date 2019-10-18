@@ -16,6 +16,7 @@ int main() {
 	int nums[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	int nums_size = sizeof(nums)/sizeof(*nums); //og: int nums_size = sizeof(nums);
 	//^^ changed so that nums_size == number of elements in nums array
+	// checked nums_size value by throwing in a break here and printing
 
 	// getting array of odds and printing them out
 	int * o = odds(nums, nums_size);
@@ -74,7 +75,7 @@ int* odds(int* nums, int size) {  //printed output with run; odd numbers aren't 
 		   j++;
 		}
 	  else
-	    odds[j] = 0;//added for even numbers
+	    odds[j] = 0;//added for even numbers (eh)
 	}
 	return odds;
 
